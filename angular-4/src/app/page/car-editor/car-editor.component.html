@@ -1,0 +1,48 @@
+<h1 class="mt-2 mb-4">Edit car</h1>
+<form *ngIf="carData$ | async as carData" #ngForm="ngForm" (ngSubmit)="onUpdate(carData)">
+
+<!-- a modell legyen nagy kezdőbetűs, minimum 2, maximum 15 karakter, tartalmazhat betűket, számokat és szóközöket is,
+a make legyen nagy kezdőbetűs, minimum 3, maximum 20 karakter, és csak betűket tartalmazzon,
+a gyártási év csak számokat tartalmazzon,
+a price csak három-, négy- és ötjegyű egész szám lehet,
+a stock csak 1 és 50 közé eső egész szám lehet. -->
+
+  <div class="form-group">
+    <label for="id">ID</label>
+    <input type="number" class="form-control" id="id" name="id"  [(ngModel)]="carData.id" readonly required>
+  </div>
+  <div class="form-group">
+    <label for="model">Model</label>
+    <input type="text" class="form-control" id="model" name="model"  [(ngModel)]="carData.model"
+      required pattern="^[A-Z][a-z0-9 ]{1,14}$">
+  </div>
+
+  <div class="form-group">
+    <label for="make">Make</label>
+    <input type="text" class="form-control" id="make" name="make"  [(ngModel)]="carData.make"
+      required pattern="^[A-Z][a-zA-Z]{2,19}$">
+  </div>
+  <div class="form-group">
+    <label for="year">Year</label>
+    <input type="number" class="form-control" id="year" name="year"  [(ngModel)]="carData.year"
+      required> <!-- A csak számokat tartalmazzon miatt nem tettem pattern, de legalább egy ilyent elbírna: pattern="^\d{4}$" -->
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price" name="price"  [(ngModel)]="carData.price"
+      required pattern="^\d{3,5}$">
+  </div>
+  <div class="form-group">
+    <label for="stock">Stock</label>
+    <input type="number" class="form-control" id="stock" name="stock"  [(ngModel)]="carData.stock"
+      required min="1" max="50">
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" [(ngModel)]="carData.active" id="active" name="active">
+    <label class="form-check-label" for="active">
+      Active?
+    </label>
+  </div>
+
+  <button [disabled]="!ngForm.form.valid" type="submit" class="btn btn-primary mt-4">Submit</button>
+</form>
